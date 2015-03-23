@@ -124,7 +124,7 @@
     //Update counter
     clockGroup.select(".counter")
       .transition()
-        .duration(500)
+        .duration(1000)
         .tween("text", function() { 
           var i = d3.interpolateRound(+this.textContent, +countDiagnoses());
           return function(t) {
