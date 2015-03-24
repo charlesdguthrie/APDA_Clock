@@ -68,9 +68,9 @@
 
   vis.append("image")
     .attr("xlink:href", "clock face.svg")
-    .attr('width', 800/400*width)
-    .attr('height', 800/200*height)
-    .attr("transform", "translate(" + -213/400*width + "," + -213/200*height + ")");
+    .attr('width', 411/400*width)
+    .attr('height', 411/200*height)
+    .attr("transform", "translate(" + -19.3/400*width + "," + -106/200*height + ")");
 
   clockGroup = vis.append("svg:g").attr("transform", "translate(" + offSetX + "," + offSetY + ")")
                   .attr("class","clockGroup");
@@ -86,7 +86,7 @@
 
   clockGroup.append("text")
     .attr("class","faceText")
-    .attr("transform", "translate(" + 19/400*width + "," + 40/400*height + ")")
+    .attr("transform", "translate(" + 18/400*width + "," + 40/400*height + ")")
     .attr("dy", ".35em")
     .style("font-size",11/400*width)
     .style("text-anchor", "left")
@@ -94,7 +94,7 @@
 
   clockGroup.append("text")
     .attr("class","faceText")
-    .attr("transform", "translate(" + 19/400*width + "," + 68/400*height + ")")
+    .attr("transform", "translate(" + 18/400*width + "," + 68/400*height + ")")
     .attr("dy", ".35em")
     .style("font-size",11/400*width)
     .style("text-anchor", "left")
@@ -156,7 +156,7 @@
           }
         }).attr("fill", "none")
 
-	clockGroup.append("svg:circle").attr("r", 5.5/400*width).attr("fill", "black").attr("class", "clock innerCircle");
+	clockGroup.append("svg:circle").attr("r", 5.4/400*width).attr("fill", "black").attr("class", "clock innerCircle");
 
 
     clockGroup.selectAll(".hand actual").data(data).enter()
