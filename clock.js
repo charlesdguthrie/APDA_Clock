@@ -41,7 +41,7 @@
 
   offSetX = 293/400*width;
 
-  offSetY = 100/200*height;
+  offSetY = 100.5/200*height;
 
   pi = Math.PI;
 
@@ -74,7 +74,6 @@
 
   clockGroup = vis.append("svg:g").attr("transform", "translate(" + offSetX + "," + offSetY + ")")
                   .attr("class","clockGroup");
-  clockGroup.append("svg:circle").attr("r", 4/400*width).attr("fill", "black").attr("class", "clock innercircle");
 
   //Add counter to track diagnoses this month
   clockGroup.append("text")
@@ -105,6 +104,8 @@
     var hourArc, minuteArc, secondArc;
     clockGroup.selectAll(".hand").remove();
     clockGroup.selectAll(".secondCircle").remove();
+    clockGroup.selectAll(".innerCircle").remove();
+
     secondArc = d3.svg.arc().innerRadius(0).outerRadius(70/400*width).startAngle(function(d) {
       return scaleSecsMins(d.numeric);
     }).endAngle(function(d) {
@@ -124,7 +125,7 @@
     //Update counter
     clockGroup.select(".counter")
       .transition()
-        .duration(1000)
+        .duration(500)
         .tween("text", function() { 
           var i = d3.interpolateRound(+this.textContent, +countDiagnoses());
           return function(t) {
@@ -154,6 +155,9 @@
             return 4/400*width;
           }
         }).attr("fill", "none")
+
+	clockGroup.append("svg:circle").attr("r", 5.5/400*width).attr("fill", "black").attr("class", "clock innerCircle");
+
 
     clockGroup.selectAll(".hand actual").data(data).enter()
       .append("svg:path").attr("d", function(d) {
