@@ -15,7 +15,11 @@ height, offSetX, offSetY, pi, render, scaleHours, scaleSecsMins, vis, face,width
 
 
 //Variable width.  Adjust here to adjust the overall size of the clock.
-width = 900;
+vis = d3.select(".chart");
+width = $(".chart").width();
+DEFAULT_WIDTH = 400;
+DEFAULT_HEIGHT = 200;
+console.log(width);
 
 var apdaBlue = "#0072C6"
 var apdaRed = "#E00747"
@@ -51,9 +55,9 @@ fields = function() {
 
 height = width/2;
 
-offSetX = 293/400*width;
+offSetX = 293/DEFAULT_WIDTH*width;
 
-offSetY = 100.5/200*height;
+offSetY = 100.5/DEFAULT_HEIGHT*height;
 
 pi = Math.PI;
 
@@ -74,17 +78,16 @@ function countDiagnoses(){
 }
 
 //Build base svg
-vis = d3.selectAll(".chart")
-  .append("svg:svg")
+vis = vis.append("svg:svg")
   .attr("width", width)
   .attr("height", height);
 
 //Append clock face svg image
 vis.append("image")
   .attr("xlink:href", "clock face.svg")
-  .attr('width', 411/400*width)
-  .attr('height', 411/200*height)
-  .attr("transform", "translate(" + -19.3/400*width + "," + -106/200*height + ")");
+  .attr('width', 411/DEFAULT_WIDTH*width)
+  .attr('height', 411/DEFAULT_HEIGHT*height)
+  .attr("transform", "translate(" + -19.3/DEFAULT_WIDTH*width + "," + -106/DEFAULT_HEIGHT*height + ")");
 
 clockGroup = vis.append("svg:g").attr("transform", "translate(" + offSetX + "," + offSetY + ")")
                 .attr("class","clockGroup");
@@ -92,26 +95,26 @@ clockGroup = vis.append("svg:g").attr("transform", "translate(" + offSetX + "," 
 //Add counter to track diagnoses this month
 clockGroup.append("text")
   .attr("class","counter")
-  .attr("transform", "translate(" + 42/400*width + "," + 1/400*height + ")")
+  .attr("transform", "translate(" + 42/DEFAULT_WIDTH*width + "," + 1/DEFAULT_WIDTH*height + ")")
   .attr("dy", ".35em")
-  .style("font-size",18/400*width)
+  .style("font-size",18/DEFAULT_WIDTH*width)
   .style("text-anchor", "middle")
   .text(formatCounter(0));
 
 //Attach counter copy text
 clockGroup.append("text")
   .attr("class","faceText")
-  .attr("transform", "translate(" + 18/400*width + "," + 40/400*height + ")")
+  .attr("transform", "translate(" + 18/DEFAULT_WIDTH*width + "," + 40/DEFAULT_WIDTH*height + ")")
   .attr("dy", ".35em")
-  .style("font-size",11/400*width)
+  .style("font-size",11/DEFAULT_WIDTH*width)
   .style("text-anchor", "left")
   .text("so far this");
 
 clockGroup.append("text")
   .attr("class","faceText")
-  .attr("transform", "translate(" + 18/400*width + "," + 68/400*height + ")")
+  .attr("transform", "translate(" + 18/DEFAULT_WIDTH*width + "," + 68/DEFAULT_WIDTH*height + ")")
   .attr("dy", ".35em")
-  .style("font-size",11/400*width)
+  .style("font-size",11/DEFAULT_WIDTH*width)
   .style("text-anchor", "left")
   .text("month");  
 
@@ -122,17 +125,17 @@ render = function(data) {
   clockGroup.selectAll(".secondCircle").remove();
   clockGroup.selectAll(".innerCircle").remove();
 
-  secondArc = d3.svg.arc().innerRadius(0).outerRadius(70/400*width).startAngle(function(d) {
+  secondArc = d3.svg.arc().innerRadius(0).outerRadius(70/DEFAULT_WIDTH*width).startAngle(function(d) {
     return scaleSecsMins(d.numeric);
   }).endAngle(function(d) {
     return scaleSecsMins(d.numeric);
   });
-  minuteArc = d3.svg.arc().innerRadius(0).outerRadius(70/400*width).startAngle(function(d) {
+  minuteArc = d3.svg.arc().innerRadius(0).outerRadius(70/DEFAULT_WIDTH*width).startAngle(function(d) {
     return scaleSecsMins(d.numeric);
   }).endAngle(function(d) {
     return scaleSecsMins(d.numeric);
   });
-  hourArc = d3.svg.arc().innerRadius(0).outerRadius(50/400*width).startAngle(function(d) {
+  hourArc = d3.svg.arc().innerRadius(0).outerRadius(50/DEFAULT_WIDTH*width).startAngle(function(d) {
     return scaleHours(d.numeric % 12);
   }).endAngle(function(d) {
     return scaleHours(d.numeric % 12);
@@ -160,21 +163,21 @@ render = function(data) {
         return hourArc(d);
       }
     }).attr("class", "hand shadow")
-      .attr("transform", "translate(" + 1/400*width + "," + 1/400*width + ")")
+      .attr("transform", "translate(" + 1/DEFAULT_WIDTH*width + "," + 1/DEFAULT_WIDTH*width + ")")
       .attr("stroke", "#999999")
       .attr("opacity",0.7)
       .attr("stroke-width", function(d) {
         if (d.unit === "seconds") {
-          return 2/400*width;
+          return 2/DEFAULT_WIDTH*width;
         } else if (d.unit === "minutes") {
-          return 3/400*width;
+          return 3/DEFAULT_WIDTH*width;
         } else if (d.unit === "hours") {
-          return 4/400*width;
+          return 4/DEFAULT_WIDTH*width;
         }
       }).attr("fill", "none")
 
   //Add center circle
-  clockGroup.append("svg:circle").attr("r", 5.4/400*width).attr("fill", "black").attr("class", "clock innerCircle");
+  clockGroup.append("svg:circle").attr("r", 5.4/DEFAULT_WIDTH*width).attr("fill", "black").attr("class", "clock innerCircle");
 
   //Add clock hands
   clockGroup.selectAll(".hand actual").data(data).enter()
@@ -196,16 +199,16 @@ render = function(data) {
 
     .attr("stroke-width", function(d) {
       if (d.unit === "seconds") {
-        return 2/400*width;
+        return 2/DEFAULT_WIDTH*width;
       } else if (d.unit === "minutes") {
-        return 3/400*width;
+        return 3/DEFAULT_WIDTH*width;
       } else if (d.unit === "hours") {
-        return 4/400*width;
+        return 4/DEFAULT_WIDTH*width;
       }
     }).attr("fill", "none");
 
   //Add circular cover for second hand
-  clockGroup.append("svg:circle").attr("r", 3/400*width).attr("fill", apdaBlue).attr("class", "clock secondCircle");
+  clockGroup.append("svg:circle").attr("r", 3/DEFAULT_WIDTH*width).attr("fill", apdaBlue).attr("class", "clock secondCircle");
 
 };
 
