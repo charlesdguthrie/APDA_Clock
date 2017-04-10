@@ -1,8 +1,16 @@
+/*
+clock.js
+Author: Charlie Guthrie for the American Parkinson Disease Assocation
+
+Script for APDA clock. 
+Looks for a 'chart' class div and builds a clock inside it.
+Adjust size using the width parameter on the first line.
+*/
+  var width = 900;
 
   var clockGroup, fields, formatHour, formatMinute, formatSecond, 
-  height, offSetX, offSetY, pi, render, scaleHours, scaleSecsMins, vis, face,width;
-
-  width = 900;
+  height, offSetX, offSetY, pi, render, scaleHours, scaleSecsMins, 
+  vis, face;
 
   //Height, width, and location parameters of the hands
   var imwidth = 667.2703;
@@ -48,9 +56,13 @@
     ];
   };
 
-  scaleSecsMins = d3.scale.linear().domain([0, 59 + 59 / 60]).range([0, 2 * pi]);
+  scaleSecsMins = d3.scale.linear()
+                    .domain([0, 59 + 59 / 60])
+                    .range([0, 2 * pi]);
 
-  scaleHours = d3.scale.linear().domain([0, 11 + 59 / 60]).range([0, 2 * pi]);
+  scaleHours = d3.scale.linear()
+                  .domain([0, 11 + 59 / 60])
+                  .range([0, 2 * pi]);
 
   var formatCounter = d3.format("04d")
 
@@ -81,14 +93,17 @@
     .attr("transform", "translate(" + clock_x + "," + clock_y + ")");
 
   //Build clock hands
-  clockGroup = vis.append("svg:g").attr("transform", "translate(" + offSetX + "," + offSetY + ")")
+  clockGroup = vis.append("svg:g")
+                  .attr("transform", "translate("+offSetX+","+offSetY+")")
                   .attr("class","clockGroup");
-  clockGroup.append("svg:circle").attr("r", 4*zoom).attr("fill", apdaDBlue).attr("class", "clock innercircle");
+  clockGroup.append("svg:circle")
+    .attr("r", 4*zoom).attr("fill", apdaDBlue)
+    .attr("class", "clock innercircle");
 
   //Add counter to track diagnoses this month
   clockGroup.append("text")
     .attr("class","counter")
-    .attr("transform", "translate(" + 48*zoom + "," + 5*zoom + ")")
+    .attr("transform", "translate(" + 50*zoom + "," + 5*zoom + ")")
     .attr("dy", ".35em")
     .style("font-size",18*zoom)
     .style("text-anchor", "middle")
@@ -100,21 +115,33 @@
     var hourArc, minuteArc, secondArc;
     clockGroup.selectAll(".hand").remove();
     clockGroup.selectAll(".secondCircle").remove();
-    secondArc = d3.svg.arc().innerRadius(0).outerRadius(85*zoom).startAngle(function(d) {
-      return scaleSecsMins(d.numeric);
-    }).endAngle(function(d) {
-      return scaleSecsMins(d.numeric);
-    });
-    minuteArc = d3.svg.arc().innerRadius(0).outerRadius(85*zoom).startAngle(function(d) {
-      return scaleSecsMins(d.numeric);
-    }).endAngle(function(d) {
-      return scaleSecsMins(d.numeric);
-    });
-    hourArc = d3.svg.arc().innerRadius(0).outerRadius(65*zoom).startAngle(function(d) {
-      return scaleHours(d.numeric % 12);
-    }).endAngle(function(d) {
-      return scaleHours(d.numeric % 12);
-    });
+    secondArc = d3.svg.arc()
+                  .innerRadius(0)
+                  .outerRadius(85*zoom)
+                  .startAngle(function(d) {
+                    return scaleSecsMins(d.numeric);
+                  })
+                  .endAngle(function(d) {
+                    return scaleSecsMins(d.numeric);
+                  });
+    minuteArc = d3.svg.arc()
+                  .innerRadius(0)
+                  .outerRadius(85*zoom)
+                  .startAngle(function(d) {
+                    return scaleSecsMins(d.numeric);
+                  })
+                  .endAngle(function(d) {
+                    return scaleSecsMins(d.numeric);
+                  });
+    hourArc = d3.svg.arc()
+                .innerRadius(0)
+                .outerRadius(65*zoom)
+                .startAngle(function(d) {
+                  return scaleHours(d.numeric % 12);
+                })
+                .endAngle(function(d) {
+                  return scaleHours(d.numeric % 12);
+                });
 
     //Update counter
     clockGroup.select(".counter")
@@ -177,7 +204,10 @@
         }
       }).attr("fill", "none");
 
-      clockGroup.append("svg:circle").attr("r", 3*zoom).attr("fill", apdaGreen).attr("class", "clock secondCircle");
+      clockGroup.append("svg:circle")
+                .attr("r", 3*zoom)
+                .attr("fill", apdaGreen)
+                .attr("class", "clock secondCircle");
 
     };
 
