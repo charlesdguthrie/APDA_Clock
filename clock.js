@@ -108,7 +108,7 @@ Adjust size using the width parameter on the first line.
     .style("font-size",18*zoom)
     .style("text-anchor", "middle")
     .style("fill",apdaBlue)
-    .style("font-family","Open Sans")
+    .style("font-family","Montserrat")
     .text(formatCounter(0));
 
   render = function(data) {
